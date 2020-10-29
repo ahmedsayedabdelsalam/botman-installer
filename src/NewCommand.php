@@ -81,11 +81,7 @@ class NewCommand extends Command
             }, $commands);
         }
 
-        $commands = array_map(function ($value, $key) {
-            return $key === 0 ? $value : ' && ' . $value;
-        }, $commands, array_keys($commands));
-
-        $process = new Process($commands, $directory, null, null, null);
+        $process = Process::fromShellCommandline(implode(' && ', $commands), $directory);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
