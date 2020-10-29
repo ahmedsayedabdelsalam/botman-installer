@@ -36,7 +36,7 @@ class NewCommand extends Command
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @return void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -81,7 +81,11 @@ class NewCommand extends Command
             }, $commands);
         }
 
-        $process = new Process(implode(' && ', $commands), $directory, null, null, null);
+        $commands = array_map(function ($value, $key) {
+            return $key === 0 ? $value : ' && ' . $value;
+        }, $commands, array_keys($commands));
+
+        $process = new Process($commands, $directory, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
@@ -92,6 +96,8 @@ class NewCommand extends Command
         });
 
         $output->writeln('<comment>BotMan Studio ready! Build an amazing chatbot!</comment>');
+
+        return 0;
     }
 
     /**
