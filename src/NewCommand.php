@@ -137,7 +137,7 @@ class NewCommand extends Command
                 break;
         }
 
-        $response = (new Client)->get('http://botman.io/studio/'.$filename);
+        $response = (new Client)->get('https://botman-installer.herokuapp.com/'.$filename);
 
         file_put_contents($zipFile, $response->getBody());
 
