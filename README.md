@@ -3,7 +3,7 @@
 First, download the BotMan installer using Composer:
 
 ```
-composer global require "botman/installer"
+composer global require "alsh/botman-installer"
 ```
 
 Make sure to place the `$HOME/.composer/vendor/bin directory` 
